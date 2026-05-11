@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "target": "es2016",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "lib": ["esnext"],
+        "types": ["node"],
+        "esModuleInterop": true,
+        "verbatimModuleSyntax": false,
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "allowImportingTsExtensions": true,
+        "noUncheckedSideEffectImports": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "sourceMap": true
+    }
+}
