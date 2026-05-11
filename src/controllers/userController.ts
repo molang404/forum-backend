@@ -4,6 +4,7 @@ import userService from "../services/userService.ts";
 
 const createUser = async (req: Request, res: Response) => {
     try {
+        // 요청
         const { username, password, name, nickname, email, phoneNumber, birthdate, gender, role } =
             req.body;
 
@@ -21,6 +22,7 @@ const createUser = async (req: Request, res: Response) => {
 
         const newUser = await userService.createUser(userData);
 
+        // 응답
         res.status(201).json(newUser);
     } catch (error) {
         console.log(error);
