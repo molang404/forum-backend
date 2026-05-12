@@ -34,32 +34,30 @@ const createUser = async (data: UserCreateInput) => {
 };
 
 const login = async (data: LoginInputType) => {
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                username: data.username,
-            },
-        });
+    const user = await prisma.user.findUnique({
+        where: {
+            username: data.username,
+        },
+    });
 
-        if (!user || user.deleteAt) {
-            throw new Error("INVALID_CREDENTIALS");
-        }
+    if (!user || user.deleteAt) {
+        throw new Error("INVALID_CREDENTIALS");
+    }
 
-        const isValid = await passwordUtil.verifyPassword(data.password, user.password);
-        if (!isValid) {
-            throw new Error("INVALID_CREDENTIALS");
-        }
-        // 아이디, 비번 있음
+    const isValid = await passwordUtil.verifyPassword(data.password, user.password);
+    if (!isValid) {
+        throw new Error("INVALID_CREDENTIALS");
+    }
+    // 아이디, 비번 있음
 
-        const token = jwtUtil.generateToken(user.id);
+    const token = jwtUtil.generateToken(user.id);
 
-        const { password, deleteAt, ...safeUserInfo } = user;
+    const { password, deleteAt, ...safeUserInfo } = user;
 
-        return {
-            user: safeUserInfo,
-            token,
-        };
-    } catch (error) {}
+    return {
+        user: safeUserInfo,
+        token,
+    };
 };
 
 export default {
