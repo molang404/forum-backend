@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserCreateInput } from "../generated/prisma/models/User.ts";
 import userService from "../services/userService.ts";
 import passwordUtil from "../utils/password/passwordUtil.ts";
+import {LoginInputType} from "../schemas/user/login.ts";
 
 const createUser = async (req: Request, res: Response) => {
     try {
@@ -49,6 +50,13 @@ const createUser = async (req: Request, res: Response) => {
     }
 };
 
+const login = async (req: Request, res: Response) => {
+    const loginData: LoginInputType = req.body;
+
+    const result = await userService.login(loginData);
+};
+
 export default {
     createUser,
+    login,
 };
