@@ -1,0 +1,15 @@
+import { z } from "zod";
+import { GenderType } from "../../generated/prisma/enums.ts";
+
+export const createUserSchema = z.object({
+    username: z.string().min(4),
+    password: z.string().min(6),
+    name: z.string().min(2),
+    nickname: z.string().min(2).max(50),
+    email: z.string(),
+    phoneNumber: z.string().optional(),
+    birthdate: z.iso.datetime().optional(),
+    gender: z.enum(GenderType)
+});
+
+export type createUserInputType = z.infer<typeof createUserSchema>;
