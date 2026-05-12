@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserCreateInput } from "../generated/prisma/models/User.ts";
 import userService from "../services/userService.ts";
 import passwordUtil from "../utils/password/passwordUtil.ts";
-import {LoginInputType} from "../schemas/user/login.ts";
+import { LoginInputType } from "../schemas/user/login.ts";
 
 const createUser = async (req: Request, res: Response) => {
     try {
@@ -34,10 +34,10 @@ const createUser = async (req: Request, res: Response) => {
                     res.status(409).json({ error: "이미 사용중인 아이디입니다." });
                     return;
                 case "ALREADY_EXISTS_EMAIL":
-                    res.status(409).json({ error: "이미 사용중인 이메일입니다."});
+                    res.status(409).json({ error: "이미 사용중인 이메일입니다." });
                     return;
                 case "ALREADY_EXISTS_NICKNAME":
-                    res.status(409).json({ error: "이미 사용중인 닉네임입니다."});
+                    res.status(409).json({ error: "이미 사용중인 닉네임입니다." });
                     return;
                 default:
                     console.log(error);
@@ -51,9 +51,16 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
-    const loginData: LoginInputType = req.body;
+    try {
+        const loginData: LoginInputType = req.body;
 
-    const result = await userService.login(loginData);
+        const result = await userService.login(loginData);
+
+        res.status(200).json({
+            message: "로그인에 성공했습니다.",
+            data: result,
+        });
+    } catch (error) {}
 };
 
 export default {

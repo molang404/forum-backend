@@ -3,6 +3,7 @@ import prisma from "../config/prisma.ts";
 import { Prisma } from "../generated/prisma/client.ts";
 import { LoginInputType } from "../schemas/user/login.ts";
 import passwordUtil from "../utils/password/passwordUtil.ts";
+import jwtUtil from "../utils/jwt/jwtUtil.ts";
 
 const createUser = async (data: UserCreateInput) => {
     try {
@@ -48,10 +49,17 @@ const login = async (data: LoginInputType) => {
         if (!isValid) {
             throw new Error("INVALID_CREDENTIALS");
         }
+        // 아이디, 비번 있음
 
-    } catch (error) {
+        const token = jwtUtil.generateToken(user.id);
 
-    }
+        const { password, deleteAt, ...safeUserInfo } = user;
+
+        return {
+            user: safeUserInfo,
+            token,
+        };
+    } catch (error) {}
 };
 
 export default {
