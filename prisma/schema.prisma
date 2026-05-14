@@ -18,22 +18,22 @@ enum GenderType {
 }
 
 enum RoleType {
-  ADMIN
   USER
+  ADMIN
 }
 
 model User {
   id          Int        @id @default(autoincrement())
-  createAt    DateTime   @default(now())
+  createdAt   DateTime   @default(now())
   updateAt    DateTime   @updatedAt
-  deleteAt    DateTime?
+  deletedAt   DateTime?
   username    String     @unique
   password    String
   name        String
   nickname    String     @unique
   email       String     @unique
   phoneNumber String?
-  birthdate   DateTime?
+  birthdate DateTime?
   gender      GenderType
   role        RoleType   @default(USER)
 }
